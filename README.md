@@ -69,10 +69,10 @@ cd rag_project
 Altere o arquivo `.env` na raiz do projeto:
 
 ```env
-GEMINI_API_KEY=sua_chave_api_aqui
-OLLAMA_BASE_URL=http://localhost:11434
+GEMINI_API_KEY=your_api_key_here
 PRIMARY_MODEL=gemini-2.5-flash
 FALLBACK_MODEL=mistral
+OLLAMA_URL=http://ollama:11434
 ```
 
 ### 2️⃣ Inicialização
