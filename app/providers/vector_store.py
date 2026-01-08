@@ -1,9 +1,8 @@
-import os
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from utils import setup_custom_logger
-
+from config import Config
 
 logger = setup_custom_logger(__name__)
 
@@ -13,7 +12,7 @@ class VectorStoreProvider:
     Provider for managing semantic search and document embeddings storage.
     """
 
-    def __init__(self, persist_directory: str):
+    def __init__(self, persist_directory: str = Config.VECTOR_STORE_PATH):
         """
         Initializes the Vector Store with HuggingFace embeddings.
 

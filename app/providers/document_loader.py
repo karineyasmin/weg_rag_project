@@ -28,7 +28,7 @@ class DocumentLoader:
         """
 
         try:
-            logger.info(f"Loadin PDF from {file_path}")
+            logger.info(f"Loading PDF from {file_path}")
             loader = PyPDFLoader(file_path)
             docs = loader.load()
             logger.info(f"Successfully extracted {len(docs)} pages.")

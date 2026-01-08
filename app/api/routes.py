@@ -1,3 +1,4 @@
+import os
 import shutil
 from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, HTTPException
@@ -5,21 +6,30 @@ from utils.logger import setup_custom_logger
 from models.schemas import DocumentResponse, QuestionResponse, QuestionRequest
 from providers.document_loader import DocumentLoader
 from providers.vector_store import VectorStoreProvider
+from providers.llm import OllamaProvider, LLMManager, GeminiProvider
 from services.ingestion import IngestionService
+from services.chat import ChatService
+from config import Config
 
 logger = setup_custom_logger(__name__)
 router = APIRouter()
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-VECTOR_STORE_PATH = BASE_DIR / "data" / "vector_store"
-TEMP_UPLOAD_PATH = BASE_DIR / "data" / "temp_uploads"
+VECTOR_STORE_PATH = Path(Config.VECTOR_STORE_PATH)
+TEMP_UPLOAD_PATH = Path(Config.TEMP_UPLOAD_PATH)
 
 VECTOR_STORE_PATH.mkdir(parents=True, exist_ok=True)
 TEMP_UPLOAD_PATH.mkdir(parents=True, exist_ok=True)
 
 loader = DocumentLoader()
 vector_store = VectorStoreProvider(persist_directory=str(VECTOR_STORE_PATH))
+
+ollama_fallback = OllamaProvider()
+gemini_primary = GeminiProvider()
+
+llm_manager = LLMManager(primary=gemini_primary, fallback=ollama_fallback)
+
 ingestion_service = IngestionService(loader=loader, vector_store=vector_store)
+chat_service = ChatService(vector_store=vector_store, llm_manager=llm_manager)
 
 
 @router.post("/documents", response_model=DocumentResponse)
@@ -62,9 +72,14 @@ async def ask_question(request: QuestionRequest):
     """
     Endpoint to retrieve context and answer questions using an LLM.
     """
+    try:
+        logger.info(f"POST /question called with: {request.question}")
 
-    logger.info(f"POST /question called with: {request.question}")
+        result = await chat_service.answer_question(request.question)
 
-    # service logic
-
-    return QuestionResponse(answer="Implementation pending RAG logic.", references=[])
+        return QuestionResponse(
+            answer=result["answer"], references=result["references"]
+        )
+    except Exception as e:
+        logger.error(f"Error answering question: {e}")
+        raise HTTPException(status_code=500, detail="Error generating answer.")
