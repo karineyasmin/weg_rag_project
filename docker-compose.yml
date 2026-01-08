@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: weg_api
+    depends_on:
+      - ollama
     ports:
       - "8000:8000"
     env_file: .env

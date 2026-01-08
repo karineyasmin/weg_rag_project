@@ -1,12 +1,13 @@
 import streamlit as st
 import requests
+import os
 
 st.set_page_config(page_title="WEG RAG Assistant", page_icon="⚙️")
 
 st.title("⚙️ WEG Technical Assistant")
 st.markdown("---")
 
-API_URL = "http://localhost:8000"
+API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 with st.sidebar:
     st.header("Upload de Manuais")
