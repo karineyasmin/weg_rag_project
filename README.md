@@ -62,8 +62,8 @@ O **WEG Motor RAG Assistant** resolve o problema de consulta rápida e precisa e
 Clone o repositório e configure as variáveis de ambiente:
 
 ```bash
-git clone https://github.com/seu-usuario/rag_project.git
-cd rag_project
+git clone https://github.com/karineyasmin/weg_rag_project
+cd weg_rag_project
 ```
 
 Altere o arquivo `.env` na raiz do projeto:
