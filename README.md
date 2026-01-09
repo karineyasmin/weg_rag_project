@@ -43,7 +43,7 @@ O **WEG Motor RAG Assistant** resolve o problema de consulta rápida e precisa e
 | **Orquestração** | LangChain | Abstração para múltiplos LLMs e integrações |
 | **Vector Store** | ChromaDB | Simplicidade + persistência local |
 | **Embeddings** | HuggingFace MiniLM | Modelo multilíngue eficiente |
-| **LLM Principal** | Google Gemini 1.5 Flash | Baixa latência e custo |
+| **LLM Principal** | Google Gemini 2.5 Flash | Baixa latência e custo |
 | **LLM Fallback** | Mistral (Ollama) | Execução local, sem dependências externas |
 | **Frontend** | Streamlit | Prototipagem rápida de chat |
 | **Containerização** | Docker Compose | Isolamento e reprodutibilidade |
