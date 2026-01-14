@@ -1,72 +1,72 @@
 # ⚙️ WEG Motor RAG Assistant
 
-> Sistema inteligente de consulta a manuais técnicos usando Retrieval-Augmented Generation (RAG)
+> Intelligent system for technical manual queries using Retrieval-Augmented Generation (RAG)
 
-Este projeto implementa uma solução completa de RAG desenvolvida para o desafio de Machine Learning Engineering. O sistema permite upload de manuais técnicos em PDF e realiza consultas contextualizadas, fornecendo respostas precisas baseadas exclusivamente nos documentos indexados.
-
----
-
-## 🎯 Visão Geral
-
-O **WEG Motor RAG Assistant** resolve o problema de consulta rápida e precisa em documentação técnica extensa. Ao invés de buscar manualmente em PDFs, o usuário interage com um assistente que:
-
-- 🔍 **Busca semântica** nos documentos usando embeddings
-- 🤖 **Gera respostas contextualizadas** com LLMs de última geração
-- 📚 **Cita fontes** (arquivo e página) para auditoria
-- 🛡️ **Evita alucinações** rejeitando perguntas fora do contexto
+This project implements a complete RAG solution developed for a Machine Learning Engineering challenge. The system allows technical manuals in PDF format to be uploaded and performs contextualized queries, providing accurate answers based exclusively on the indexed documents.
 
 ---
 
-## 🚀 Funcionalidades
+## 🎯 Overview
+
+The **WEG Motor RAG Assistant** solves the problem of fast and accurate information retrieval in extensive technical documentation. Instead of manually searching through PDFs, users interact with an assistant that:
+
+- 🔍 **Performs semantic search** across documents using embeddings.
+- 🤖 **Generates contextualized answers** using state-of-the-art LLMs.
+- 📚 **Cites sources** (file and page number) for auditability.
+- 🛡️ **Prevents hallucinations** by rejecting out-of-scope questions.
+
+---
+
+## 🚀 Features
 
 ### Core Features
-- ✅ **Upload de Documentos**: Indexação de múltiplos arquivos PDF simultâneos
-- ✅ **Processamento Inteligente**: Divisão automática em chunks com sobreposição
-- ✅ **Busca Vetorial**: ChromaDB com embeddings multilíngues (HuggingFace)
-- ✅ **Respostas Contextualizadas**: LLMs com prompt engineering anti-alucinação
-- ✅ **Citação de Fontes**: Referências automáticas (arquivo + página)
-- ✅ **Arquitetura Resiliente**: Fallback Gemini → Ollama/Mistral
+- ✅ **Document Upload**: Index multiple PDF files simultaneously.
+- ✅ **Smart Processing**: Automatic text splitting into chunks with overlap.
+- ✅ **Vector Search**: ChromaDB powered by multilingual embeddings (HuggingFace).
+- ✅ **Contextual Answers**: LLMs with anti-hallucination prompt engineering.
+- ✅ **Source Citation**: Automatic references (file name + page).
+- ✅ **Resilient Architecture**: Primary Gemini → Ollama/Mistral fallback system.
 
-### Diferenciais
-- 🌐 **Suporte Multilíngue**: Responde na mesma língua da pergunta
-- 🔄 **Hot-Reload**: Atualização de índice sem reiniciar o sistema
-- 📊 **Logs Estruturados**: Rastreamento completo de requisições
-- 🐳 **Deploy Simplificado**: Docker Compose com um comando
-
----
-
-## 🛠️ Stack Tecnológica
-
-| Camada | Tecnologia | Justificativa |
-|--------|-----------|---------------|
-| **API** | FastAPI | Alta performance, validação automática (Pydantic) |
-| **Orquestração** | LangChain | Abstração para múltiplos LLMs e integrações |
-| **Vector Store** | ChromaDB | Simplicidade + persistência local |
-| **Embeddings** | HuggingFace MiniLM | Modelo multilíngue eficiente |
-| **LLM Principal** | Google Gemini 2.5 Flash | Baixa latência e custo |
-| **LLM Fallback** | Mistral (Ollama) | Execução local, sem dependências externas |
-| **Frontend** | Streamlit | Prototipagem rápida de chat |
-| **Containerização** | Docker Compose | Isolamento e reprodutibilidade |
+### Highlights
+- 🌐 **Multilingual Support**: Responds in the same language as the query.
+- 🔄 **Hot-Reload**: Update the vector index without restarting the system.
+- 📊 **Structured Logs**: Full request and execution tracing.
+- 🐳 **Simplified Deployment**: Docker Compose setup with a single command.
 
 ---
 
-## 📦 Instalação e Execução
+## 🛠️ Tech Stack
 
-### Pré-requisitos
+| Layer | Technology | Rationale |
+|-------|------------|-----------|
+| **API** | FastAPI | High performance and automatic validation (Pydantic). |
+| **Orchestration** | LangChain | Abstraction for multiple LLMs and integrations. |
+| **Vector Store** | ChromaDB | Simplicity combined with local persistence. |
+| **Embeddings** | HuggingFace MiniLM | Efficient and lightweight multilingual model. |
+| **Primary LLM** | Google Gemini 2.5 Flash | Low latency and cost-effectiveness. |
+| **Fallback LLM** | Mistral (Ollama) | Local execution, eliminating external dependencies. |
+| **Frontend** | Streamlit | Rapid chat interface prototyping. |
+| **Containerization** | Docker Compose | Environment isolation and reproducibility. |
+
+---
+
+## 📦 Installation & Execution
+
+### Prerequisites
 - Docker `>= 20.10`
 - Docker Compose `>= 2.0`
-- Chave API do Google Gemini ([obtenha aqui](https://aistudio.google.com/app/apikey))
+- Google Gemini API Key ([get it here](https://aistudio.google.com/app/apikey))
 
-### 1️⃣ Configuração
+### 1️⃣ Configuration
 
-Clone o repositório e configure as variáveis de ambiente:
+Clone the repository and set up the environment variables:
 
 ```bash
 git clone https://github.com/karineyasmin/weg_rag_project
 cd weg_rag_project
 ```
 
-Altere o arquivo `.env` na raiz do projeto:
+Edit the `.env` file in the project root:
 
 ```env
 GEMINI_API_KEY=your_api_key_here
@@ -75,21 +75,21 @@ FALLBACK_MODEL=mistral
 OLLAMA_URL=http://ollama:11434
 ```
 
-### 2️⃣ Inicialização
+### 2️⃣ Initialization
 
-Execute todos os serviços com um único comando:
+Run all services with a single command:
 
 ```bash
 docker-compose up --build
 ```
 
-**O que acontece:**
-1. Build das imagens Python customizadas
-2. Inicialização do serviço Ollama
-3. Download automático do modelo Mistral
-4. Subida da API (porta 8000) e Frontend (porta 8501)
+What happens:
+- Builds custom Python images.
+- Initializes the Ollama service.
+- Automatically downloads the Mistral model.
+- Starts the API (port 8000) and Frontend (port 8501).
 
-### 3️⃣ Acesso
+### 3️⃣ Access
 
 - **Frontend**: http://localhost:8501
 - **API Docs**: http://localhost:8000/docs
@@ -97,19 +97,22 @@ docker-compose up --build
 
 ---
 
-## 📑 Documentação da API
+## 📑 API Documentation
 
-### `POST /documents`
-**Descrição**: Indexa manuais técnicos no sistema.
+### POST /documents
 
-**Request**:
+Description: Indexes technical manuals into the system.
+
+**Request:**
+
 ```bash
 curl -X POST "http://localhost:8000/documents" \
-  -F "files=@manual_motor.pdf" \
-  -F "files=@manual_reducao.pdf"
+  -F "files=@motor_manual.pdf" \
+  -F "files=@gearbox_manual.pdf"
 ```
 
-**Response**:
+**Response:**
+
 ```json
 {
   "message": "Documents processed successfully",
@@ -118,22 +121,23 @@ curl -X POST "http://localhost:8000/documents" \
 }
 ```
 
----
+### POST /question
 
-### `POST /question`
-**Descrição**: Realiza perguntas sobre os documentos indexados.
+Description: Ask questions regarding the indexed documents.
 
-**Request**:
+**Request:**
+
 ```bash
 curl -X POST "http://localhost:8000/question" \
   -H "Content-Type: application/json" \
-  -d '{"question": "Qual a potência nominal do motor W22?"}'
+  -d '{"question": "What is the nominal power of the W22 motor?"}'
 ```
 
-**Response**:
+**Response:**
+
 ```json
 {
-  "answer": "A potência nominal do motor W22 varia de 0,12 a 355 kW, dependendo do modelo.",
+  "answer": "The nominal power of the W22 motor ranges from 0.12 to 355 kW, depending on the model.",
   "references": [
     "Source: manual_w22.pdf (Page 12)",
     "Source: manual_w22.pdf (Page 34)"
@@ -143,160 +147,146 @@ curl -X POST "http://localhost:8000/question" \
 
 ---
 
-## 💡 Exemplos de Uso
+## 💡 Usage Examples
 
-### ✅ Perguntas Técnicas
-```
-"O que é a Potência absorvida (Pa) de um motor?"
-"Qual a fórmula para cálculo de torque mencionada no manual?"
-"Quais os requisitos para instalação em ambiente explosivo?"
-```
+### ✅ Technical Questions
+- "What is the absorbed power (Pa) of a motor?"
+- "What is the formula for calculating torque mentioned in the manual?"
+- "What are the requirements for installation in explosive environments?"
 
-### ✅ Perguntas em Inglês
-```
-"What is the motor's power consumption?"
-"How to verify insulation resistance?"
-```
+### ✅ English Questions
+- "What is the motor's power consumption?"
+- "How to verify insulation resistance?"
 
-### ❌ Teste Anti-Alucinação
-```
-Pergunta: "Qual a previsão do tempo para amanhã?"
-Resposta: "Information not found."
-```
-*(O sistema rejeita perguntas fora do contexto dos documentos)*
+### ❌ Anti-Hallucination Test
+- **Question**: "What is the weather forecast for tomorrow?"
+- **Answer**: "Information not found." (The system rejects questions outside the context of the uploaded documents)
 
 ---
 
-## 🏗️ Arquitetura
+## 🏗️ Architecture
 
-```
-┌─────────────┐      ┌─────────────┐      ┌─────────────┐
-│  Streamlit  │─────▶│   FastAPI   │─────▶│  ChromaDB   │
-│  Frontend   │      │     API     │      │ Vector Store│
-└─────────────┘      └─────────────┘      └─────────────┘
-                            │
-                            ▼
-                     ┌──────────────┐
-                     │  LLM Manager │
-                     │              │
-                     │ ┌──────────┐ │
-                     │ │  Gemini  │ │ (Primary)
-                     │ └──────────┘ │
-                     │      ▼       │
-                     │ ┌──────────┐ │
-                     │ │  Mistral │ │ (Fallback)
-                     │ └──────────┘ │
-                     └──────────────┘
-```
-
-### Fluxo de Processamento
-1. **Ingestão**: PDF → PyPDF → RecursiveTextSplitter → Embeddings → ChromaDB
-2. **Consulta**: Pergunta → Busca Semântica (top-k=3) → Prompt Engineering → LLM → Resposta
+### Processing Flow
+- **Ingestion**: PDF → PyPDF → RecursiveTextSplitter → Embeddings → ChromaDB.
+- **Query**: Question → Semantic Search (top-k=3) → Prompt Engineering → LLM → Answer.
 
 ---
 
-## 🧪 Testes
+## 🧪 Testing
 
-### Teste Manual (via cURL)
-```bash
-# 1. Indexar documento
-curl -X POST "http://localhost:8000/documents" \
-  -F "files=@data/manual_teste.pdf"
+### Manual Test (via cURL)
 
-# 2. Fazer pergunta
-curl -X POST "http://localhost:8000/question" \
-  -H "Content-Type: application/json" \
-  -d '{"question": "Qual a tensão nominal?"}'
-```
+1. Index a document
+    ```bash
+    curl -X POST "http://localhost:8000/documents" \
+      -F "files=@data/test_manual.pdf"
+    ```
 
-### Logs de Depuração
+2. Ask a question
+    ```bash
+    curl -X POST "http://localhost:8000/question" \
+      -H "Content-Type: application/json" \
+      -d '{"question": "What is the nominal voltage?"}'
+    ```
+
+### Debug Logs
+
 ```bash
 docker-compose logs -f api
 ```
 
 ---
 
-## 🔧 Configurações Avançadas
+## 🔧 Advanced Configuration
 
-### Ajustar Tamanho dos Chunks
-Edite [`app/services/ingestion.py`](app/services/ingestion.py):
+### Adjust Chunk Size
+
+Edit `app/services/ingestion.py`:
+
 ```python
 self.splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1500,      # Aumentar para chunks maiores
-    chunk_overlap=300     # Aumentar sobreposição
+    chunk_size=1500,      # Increase for larger chunks
+    chunk_overlap=300     # Increase overlap
 )
 ```
 
-### Trocar Modelo de Embeddings
-Edite [`app/providers/vector_store.py`](app/providers/vector_store.py):
+### Change Embeddings Model
+
+Edit `app/providers/vector_store.py`:
+
 ```python
 self.embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"  # Modelo alternativo
+    model_name="sentence-transformers/all-MiniLM-L6-v2"  # Alternative model
 )
 ```
 
-### Usar Apenas Ollama (sem Gemini)
-No [`.env`](.env):
+### Use Only Ollama (No Gemini)
+
+In the `.env` file:
+
 ```env
-GEMINI_API_KEY=""  # Deixar vazio força fallback
+GEMINI_API_KEY=""  # Leaving this empty forces the fallback to Mistral
 ```
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📂 Project Structure
 
 ```
 rag_project/
 ├── app/
-│   ├── api/              # Rotas FastAPI
-│   ├── config/           # Variáveis de ambiente
-│   ├── models/           # Schemas Pydantic
-│   ├── providers/        # Integrações (LLM, Vector Store)
-│   ├── services/         # Lógica de negócio
+│   ├── api/              # FastAPI routes
+│   ├── config/           # Environment variables
+│   ├── models/           # Pydantic schemas
+│   ├── providers/        # Integrations (LLM, Vector Store)
+│   ├── services/         # Business logic
 │   └── utils/            # Logging
 ├── data/
-│   ├── vector_store/     # Banco de vetores persistido
-│   └── temp_uploads/     # PDFs temporários
-├── app_frontend.py       # Interface Streamlit
-├── docker-compose.yml    # Orquestração de containers
-├── Dockerfile            # Imagem Python customizada
-└── pyproject.toml        # Dependências do projeto
+│   ├── vector_store/     # Persisted vector database
+│   └── temp_uploads/     # Temporary PDF uploads
+├── app_frontend.py       # Streamlit interface
+├── docker-compose.yml    # Container orchestration
+├── Dockerfile            # Custom Python image
+└── pyproject.toml        # Project dependencies
 ```
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Erro: `Ollama connection refused`
-**Solução**: Aguarde ~30s para o modelo Mistral ser baixado:
+### Error: Ollama connection refused
+
+**Solution**: Wait approximately 30 seconds for the Mistral model to finish downloading:
+
 ```bash
 docker-compose logs ollama-pull-model
 ```
 
-### Erro: `Gemini API key invalid`
-**Solução**: Verifique se a chave está correta no [`.env`](.env) e reinicie:
+### Error: Gemini API key invalid
+
+**Solution**: Double-check the key in the `.env` file and restart the containers:
+
 ```bash
 docker-compose down
 docker-compose up --build
 ```
 
-### Embeddings lentos na primeira execução
-**Solução**: O modelo HuggingFace é baixado no primeiro uso (~400MB). Aguarde o download.
+### Slow embeddings on first run
+
+**Solution**: The HuggingFace model is downloaded during first use (~400MB). Please wait for the download to complete.
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Este projeto foi desenvolvido como parte de um desafio técnico e está disponível sob a licença MIT.
+This project was developed as part of a technical challenge and is available under the MIT License.
 
 ---
 
-## 👤 Autor
+## 👤 Author
 
 **Karine**  
-📧 Email: [karine.y.ribeiro@gmail.com](mailto:karine.y.ribeiro@gmail.com)  
-🔗 LinkedIn: [Karine Yasmin Ribeiro](https://linkedin.com/in/karine-yasmin)
+📧 Email: karine.y.ribeiro@gmail.com  
+🔗 LinkedIn: Karine Yasmin Ribeiro
 
----
-
-**Desenvolvido com ❤️ usando Python e LangChain**
+Built with ❤️ using Python and LangChain
